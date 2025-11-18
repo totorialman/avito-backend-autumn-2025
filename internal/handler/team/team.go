@@ -2,6 +2,7 @@ package team
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 
 	"github.com/totorialman/avito-backend-autumn-2025/internal/handler"
@@ -24,6 +25,7 @@ func (h *TeamHandler) AddTeam(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "invalid JSON", http.StatusBadRequest)
 		return
 	}
+	log.Printf("AddTeam request: TeamName=%s MembersCount=%d", req.TeamName, len(req.Members))
 
 	var members []model.User
 	for _, m := range req.Members {
@@ -54,6 +56,7 @@ func (h *TeamHandler) GetTeam(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "team_name is required", http.StatusBadRequest)
 		return
 	}
+	log.Printf("GetTeam request: team_name=%s", teamName)
 
 	team, err := h.teams.GetTeam(teamName)
 	if err != nil {

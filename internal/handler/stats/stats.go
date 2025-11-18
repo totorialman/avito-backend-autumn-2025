@@ -1,6 +1,7 @@
 package stats
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/totorialman/avito-backend-autumn-2025/internal/handler"
@@ -15,6 +16,7 @@ func NewStatsHandler(stats statsService) *StatsHandler {
 }
 
 func (h *StatsHandler) GetReviewerAssignmentStats(w http.ResponseWriter, r *http.Request) {
+	log.Printf("GetReviewerAssignmentStats request")
 	domainStats, err := h.stats.GetReviewerAssignmentStats()
 	if err != nil {
 		handler.HandleError(w, err)

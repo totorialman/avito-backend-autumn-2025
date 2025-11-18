@@ -2,6 +2,7 @@ package pr
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 	"time"
 
@@ -24,6 +25,7 @@ func (h *PrHandler) CreatePR(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "invalid JSON", http.StatusBadRequest)
 		return
 	}
+	log.Printf("CreatePR request: PRID=%s PRName=%s AuthorID=%s", req.PRID, req.PRName, req.AuthorID)
 
 	pr, err := h.pullRequests.CreatePR(req.PRID, req.PRName, req.AuthorID)
 	if err != nil {
@@ -50,6 +52,7 @@ func (h *PrHandler) MergePR(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "invalid JSON", http.StatusBadRequest)
 		return
 	}
+	log.Printf("MergePR request: PRID=%s", req.PRID)
 
 	pr, err := h.pullRequests.MergePR(req.PRID)
 	if err != nil {
@@ -83,6 +86,7 @@ func (h *PrHandler) Reassign(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "invalid JSON", http.StatusBadRequest)
 		return
 	}
+	log.Printf("Reassign request: PRID=%s OldUserID=%s", req.PRID, req.OldUserID)
 
 	pr, newReviewer, err := h.pullRequests.ReassignReviewer(req.PRID, req.OldUserID)
 	if err != nil {
@@ -103,4 +107,3 @@ func (h *PrHandler) Reassign(w http.ResponseWriter, r *http.Request) {
 
 	handler.WriteJSON(w, resp, http.StatusOK)
 }
-

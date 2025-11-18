@@ -25,6 +25,7 @@ type ErrorResponse struct {
 }
 
 func HandleError(w http.ResponseWriter, err error) {
+	log.Printf("HTTP handler error: %v", err)
 	if err == nil {
 		return
 	}

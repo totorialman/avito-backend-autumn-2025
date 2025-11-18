@@ -2,6 +2,7 @@ package user
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 
 	"github.com/totorialman/avito-backend-autumn-2025/internal/handler"
@@ -23,6 +24,7 @@ func (h *UserHandler) SetActive(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "invalid JSON", http.StatusBadRequest)
 		return
 	}
+	log.Printf("SetActive request: UserID=%s IsActive=%v", req.UserID, req.IsActive)
 
 	user, err := h.users.SetActive(req.UserID, req.IsActive)
 	if err != nil {
@@ -48,6 +50,7 @@ func (h *UserHandler) GetUserReviews(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "user_id is required", http.StatusBadRequest)
 		return
 	}
+	log.Printf("GetUserReviews request: user_id=%s", userID)
 
 	prs, err := h.users.GetPRsByReviewer(userID)
 	if err != nil {
