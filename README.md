@@ -7,21 +7,19 @@
 cp .env.example .env
 ```
 
-### 2. Запустить только БД 
+### 2. Запустить проект с автоматическими миграциями
 ```bash
-docker compose up -d postgres
+docker-compose up
 ```
 
-### 3. Применить миграции
+### 3. Ручное управление миграциями (опционально)
 ```bash
-make migrate-up
+make migrate-status   # проверить статус
+make migrate-up       # применить все миграции
+make migrate-down     # откатить последнюю
+make migrate-reset    # сбросить все миграции
 ```
 Требуется установленный goose для выполнения миграций
-
-### 4. Запустить весь сервис
-```bash
-docker compose up -d --build
-```
 
 API будет доступен на `http://localhost:8080` 
 

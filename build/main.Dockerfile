@@ -18,6 +18,6 @@ COPY --from=builder /usr/local/go/lib/time/zoneinfo.zip /
 ENV TZ="Europe/Moscow"
 ENV ZONEINFO=/zoneinfo.zip
 
-EXPOSE 5458
+EXPOSE 8080
 
 ENTRYPOINT ["./.bin"]

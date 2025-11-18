@@ -36,6 +36,20 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    
+  migrate:
+    build:
+      context: .
+      dockerfile: ./build/migrate.Dockerfile
+    depends_on:
+      postgres:
+          condition: service_healthy
+    environment:
+      GOOSE_DRIVER: postgres
+      GOOSE_DBSTRING: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}?sslmode=disable
+    command: ["up"]
+    networks:
+      - avito-backend-autumn-2025-network
 
 volumes:
   pgdata:   
@@ -43,3 +57,4 @@ volumes:
 networks:
   avito-backend-autumn-2025-network:
     driver: bridge
+
